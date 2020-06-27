@@ -7,7 +7,9 @@ package it.polito.tdp.PremierLeague;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.PremierLeague.model.Avversario;
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,6 +47,15 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
 
+    	double x ;
+    	try {
+    		x = Double.parseDouble(this.txtGoals.getText());
+    	} catch (Throwable t){
+    		txtResult.appendText("Errore nell'input!");
+    		return;
+    	}
+    	model.creaGrafo(x);
+    	txtResult.setText(String.format("Sono stati creati %d vertici e %d archi\n", model.nVertici(),model.nArchi()));
     }
 
     @FXML
@@ -54,6 +65,15 @@ public class FXMLController {
 
     @FXML
     void doTopPlayer(ActionEvent event) {
+    	Player p = this.model.topPlayer();
+    	txtResult.appendText(String.format("TOP PLAYER: %s\n", p));
+    	
+    	txtResult.appendText(String.format("AVVERSARI BATTUTI:\n"));
+    	for(Avversario a : model.avversari()) {
+    		txtResult.appendText(a.toString()+"\n");
+    	}
+    	
+    	
 
     }
 
